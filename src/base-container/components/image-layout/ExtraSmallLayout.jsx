@@ -21,7 +21,7 @@ const ExtraSmallLayout = () => {
         <div className='auth_message'>
 
         <span className='w-100 d-flex mb-0 justify-content-center align-items-center'>Choose a convenient way to log in.</span>
-        <p>Don't have an account yet? Create one by going to the page <span><a href='/authn/register'>Sign up</a></span> </p>
+        <p>Don't have an account yet? Create one by going to the page <span><a href='/authn/register'>Register</a></span> </p>
         </div>
     </div>
     </div>

@@ -37,7 +37,7 @@
   margin-top: 0px !important;
 }
 
-.site-header-desktop .container-fluid, .site-header-mobile {
+.site-header-desktop, .site-header-mobile {
     background: linear-gradient(180deg, #ff7d5a, #ffa086);
     padding: 10px 40px;
     box-shadow: 0 4px 6px rgb(0, 0, 0, 0.18);
@@ -45,7 +45,8 @@
 
 .secondary-menu-container a {
     border: 1px solid white;
-    color: white;
+    color: white !important;
+    border-radius: 2px !important;
 }
 .nav .btn:hover{
 	color: white;
@@ -71,4 +72,8 @@
     position: absolute;
     right: 20px;
     top: 55px;
+}
+
+#main-content  {
+  background: #fff !important;
 }

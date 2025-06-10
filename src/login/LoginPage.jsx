@@ -215,15 +215,19 @@ const LoginPage = (props) => {
           errorCount={errorCode.count}
           context={errorCode.context}
         />
-        <ThirdPartyAuthAlert
+        {/* <ThirdPartyAuthAlert
           currentProvider={currentProvider}
           platformName={platformName}
-        />
+        /> */}
         <AccountActivationMessage
           messageType={activationMsgType}
         />
         {showResetPasswordSuccessBanner && <ResetPasswordSuccess />}
-        <Form id="sign-in-form" name="sign-in-form">
+        
+        <Form id="sign-in-form" name="sign-in-form" className='sign-in-form'>
+        <label htmlFor="emailOrUsername" className='email-label'>
+                {formatMessage(messages['login.user.identity.label'])}
+        </label>
           <FormGroup
             name="emailOrUsername"
             value={formFields.emailOrUsername}
@@ -231,8 +235,11 @@ const LoginPage = (props) => {
             handleChange={handleOnChange}
             handleFocus={handleOnFocus}
             errorMessage={errors.emailOrUsername}
-            floatingLabel={formatMessage(messages['login.user.identity.label'])}
+            // floatingLabel={formatMessage(messages['login.user.identity.label'])}
           />
+          <label htmlFor="password" className='email-label'>
+            {formatMessage(messages['login.password.label'])}
+          </label>
           <PasswordField
             name="password"
             value={formFields.password}
@@ -242,14 +249,14 @@ const LoginPage = (props) => {
             handleChange={handleOnChange}
             handleFocus={handleOnFocus}
             errorMessage={errors.password}
-            floatingLabel={formatMessage(messages['login.password.label'])}
+            // floatingLabel={formatMessage(messages['login.password.label'])}
           />
           <StatefulButton
             name="sign-in"
             id="sign-in"
             type="submit"
             variant="brand"
-            className="login-button-width"
+            className="login-button-width w-100"
             state={submitState}
             labels={{
               default: formatMessage(messages['sign.in.button']),
@@ -258,7 +265,7 @@ const LoginPage = (props) => {
             onClick={handleSubmit}
             onMouseDown={(event) => event.preventDefault()}
           />
-          <Link
+          {/* <Link
             id="forgot-password"
             name="forgot-password"
             className="btn btn-link font-weight-500 text-body"
@@ -266,15 +273,15 @@ const LoginPage = (props) => {
             onClick={trackForgotPasswordLinkClick}
           >
             {formatMessage(messages['forgot.password'])}
-          </Link>
-          <ThirdPartyAuth
+          </Link> */}
+          {/* <ThirdPartyAuth
             currentProvider={currentProvider}
             providers={providers}
             secondaryProviders={secondaryProviders}
             handleInstitutionLogin={handleInstitutionLogin}
             thirdPartyAuthApiStatus={thirdPartyAuthApiStatus}
             isLoginPage
-          />
+          /> */}
         </Form>
       </div>
     </>

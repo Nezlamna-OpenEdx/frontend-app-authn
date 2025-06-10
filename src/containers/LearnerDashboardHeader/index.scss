@@ -1,0 +1,74 @@
+.dropdown-menu-collapse {
+  width: 100vw;
+  position: absolute;
+  left: 0;
+}
+
+.learner-variant-header {
+  a {
+    // needed to make the link not resize the header
+    border-bottom: 2px solid transparent;
+  }
+  .course-link {
+    border-bottom: 2px solid !important;
+  }
+
+  .course-link:hover {
+    border-bottom: inherit !important;
+  }
+}
+
+.nav-small-menu {
+  > * {
+    justify-content: flex-start !important;
+
+    border-radius: 0 !important;
+    border-top: 1px solid #ddd !important;
+
+    &::after {
+      content: '\00BB';
+      padding-left: 10px;
+    }
+  }
+}
+
+.logo {
+  // copy from legacy dashboard
+  margin-top: 0px !important;
+}
+
+.site-header-desktop .container-fluid, .site-header-mobile {
+    background: linear-gradient(180deg, #ff7d5a, #ffa086);
+    padding: 10px 40px;
+    box-shadow: 0 4px 6px rgb(0, 0, 0, 0.18);
+}
+
+.secondary-menu-container a {
+    border: 1px solid white;
+    color: white;
+}
+.nav .btn:hover{
+	color: white;
+  background: none;
+  border-color: white;
+  text-decoration: none;
+}
+
+.menu .menu-trigger{
+
+    background: none;
+    border: none;
+    color: white;
+}
+
+.menu-content li a {
+    color: white;
+    background: none;
+    border: 1px solid white;
+}
+.menu-content {
+    background: linear-gradient(180deg, #ff7d5a, #ffa086);
+    position: absolute;
+    right: 20px;
+    top: 55px;
+}

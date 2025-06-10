@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+.footer-container,.footer-menu .footer-menu-list{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-items: center;
+
+        }
+        
+        .footer-container{
+            font-family: "Montserrat";
+            font-weight: 600;
+            padding: 80px;
+            background-color: #333D49;
+        }
+        .footer-menu .footer-menu-list{
+            gap: 20px;
+            list-style: none;
+            padding: 0;
+            text-decoration: none;
+        }
+        .footer-menu-list li a{
+            color: white;
+            text-decoration: none;
+            font-size: 17px;
+        }
+        @media screen and (max-width: 480px) {
+            .footer-container{
+                gap: 25px;
+            }
+            .footer-menu .footer-menu-list{
+                flex-direction: column;
+                gap: 24px;
+                margin: 23px 0;
+            }
+            
+        }
+        @media screen and (max-width: 768px) {
+            .footer-container{
+                flex-direction: column;
+                gap: 25px;
+            }
+            .footer-menu .footer-menu-list{
+                flex-direction: column;
+                gap: 24px;
+                margin: 23px 0;
+            }
+            
+        }
+        @media screen and (max-width: 968px) {
+            .footer-container{
+                flex-direction: column;
+                gap: 25px;
+                padding-left: 25px;
+            }
+            .footer-menu .footer-menu-list{
+                flex-direction: column;
+                gap: 24px;
+                margin: 23px 0;
+            }
+            
+        }

@@ -5,41 +5,43 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import { Hyperlink, Image } from '@openedx/paragon';
 import classNames from 'classnames';
 
-import messages from './messages';
+import { useLocation } from 'react-router-dom';
 
 const LargeLayout = () => {
   const { formatMessage } = useIntl();
 
-  return (
-    <div className="w-50 d-flex">
-      <div className="col-md-9 bg-primary-400">
-        <Hyperlink destination={getConfig().MARKETING_SITE_BASE_URL}>
-          <Image className="logo position-absolute" alt={getConfig().SITE_NAME} src={getConfig().LOGO_WHITE_URL} />
-        </Hyperlink>
-        <div className="min-vh-100 d-flex align-items-center">
-          <div className={classNames({ 'large-yellow-line mr-n4.5': getConfig().SITE_NAME === 'edX' })} />
-          <h1
-            className={classNames(
-              'display-2 text-white mw-xs',
-              { 'ml-6': getConfig().SITE_NAME !== 'edX' },
-            )}
-          >
-            {formatMessage(messages['start.learning'])}
-            <div className="text-accent-a">
-              {formatMessage(messages['with.site.name'], { siteName: getConfig().SITE_NAME })}
-            </div>
-          </h1>
-        </div>
+  const location = useLocation();
+  const bannerUrl = `${getConfig().LMS_BASE_URL}/static/nezlamna-theme/images/auth_image.jpg`
+
+  if (location.pathname == '/register'){
+    return (
+
+      <div className='w-100 banner-container'>
+      <div className="w-100 p-0 mt-4 mb-3 d-flex flex-column justify-content-center align-items-center">
+          <p className="auth_heading">Sign up</p>
       </div>
-      <div className="col-md-3 bg-white p-0">
-        <svg className="ml-n1 w-100 h-100 large-screen-svg-primary" preserveAspectRatio="xMaxYMin meet">
-          <g transform="skewX(171.6)">
-            <rect x="0" y="0" height="100%" width="100%" />
-          </g>
-        </svg>
+      </div>      
+    );
+  }
+  else{
+    return (
+
+      <div className='w-100 banner-container'>
+      <div className="auth_banner_container w-100 d-flex flex-column">
+            <img src={bannerUrl} alt="auth-banner" />
       </div>
-    </div>
-  );
+      <div className="w-100 p-0 mb-3 d-flex flex-column justify-content-center align-items-center">
+          <p className="auth_heading">Authorization</p>
+          <div className='auth_message'>
+  
+          <span className='w-100 d-flex mb-0 justify-content-center align-items-center'>Choose a convenient way to log in.</span>
+          <p>Don't have an account yet? Create one by going to the page <span><a href='/authn/register'>Sign up</a></span> </p>
+          </div>
+      </div>
+      </div>
+    );
+  }
+  
 };
 
 export default LargeLayout;

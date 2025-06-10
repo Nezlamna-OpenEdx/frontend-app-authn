@@ -38,6 +38,65 @@ $elevation-level-2-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.15);
   position: absolute;
   margin: auto;
 }
+body{
+  background-color: #FAF2ED !important;
+}
+.content{
+  margin-bottom: 61px !important;
+  background: white !important;
+  border-radius: 20px;
+}
+.main-content input{
+  border-color: #FF7D5A !important;
+}
+
+.btn-brand{
+  border-color: #FF7D5A !important;
+  background-color: #FF7D5A !important;
+}
+.layout{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+}
+.auth_banner_container{
+  margin-bottom: 42px !important;
+}
+.auth_heading{
+  font-size: 64px;
+  font-weight: 600;
+  color: #FF7D5A;
+  margin-bottom: 27px;
+}
+.auth_message{
+  font-size: 40px !important;
+  font-weight: 400 !important; ;
+}
+.email-label{
+  font-size: 23px;
+  font-weight: 400;
+}
+
+
+@media screen and (max-width: 1200px){
+  .auth_message{
+    font-size: 35px !important;
+  }
+}
+
+@media screen and (max-width: 600px){
+  .auth_heading{
+    font-size: 35px !important;
+  }
+
+  .auth_message{
+    line-height: 32px;
+    font-size: 16px !important;
+    font-weight: 400 !important; ;
+  }  
+}
 
 .main-content {
   @extend .pt-4;

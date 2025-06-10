@@ -26,6 +26,8 @@ import { ProgressiveProfiling } from './progressive-profiling';
 import { RecommendationsPage } from './recommendations';
 import { RegistrationPage } from './register';
 import { ResetPasswordPage } from './reset-password';
+import LearnerDashboardHeader from './containers/LearnerDashboardHeader';
+import FooterSlot from './footer-slot/FooterSlot';
 
 import './index.scss';
 
@@ -33,6 +35,7 @@ registerIcons();
 
 const MainApp = () => (
   <AppProvider store={configureStore()}>
+     <LearnerDashboardHeader />
     <Helmet>
       <link rel="shortcut icon" href={getConfig().FAVICON_URL} type="image/x-icon" />
     </Helmet>
@@ -56,7 +59,9 @@ const MainApp = () => (
       <Route path={RECOMMENDATIONS} element={<RecommendationsPage />} />
       <Route path={PAGE_NOT_FOUND} element={<NotFoundPage />} />
       <Route path="*" element={<Navigate replace to={PAGE_NOT_FOUND} />} />
+
     </Routes>
+    <FooterSlot />
   </AppProvider>
 );
 

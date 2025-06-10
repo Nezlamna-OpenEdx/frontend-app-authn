@@ -12,6 +12,8 @@ import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import Skeleton from 'react-loading-skeleton';
 
+import { getAuthenticatedHttpClient, getAuthenticatedUser } from '@edx/frontend-platform/auth';
+import * as QueryString from 'query-string';
 import ConfigurableRegistrationForm from './components/ConfigurableRegistrationForm';
 import RegistrationFailure from './components/RegistrationFailure';
 import {
@@ -30,7 +32,7 @@ import {
   isFormValid, prepareRegistrationPayload,
 } from './data/utils';
 import messages from './messages';
-import { EmailField, NameField, UsernameField } from './RegistrationFields';
+import { EmailField } from './RegistrationFields';
 import {
   InstitutionLogistration,
   PasswordField,
@@ -95,6 +97,7 @@ const RegistrationPage = (props) => {
   const [errors, setErrors] = useState({ ...backedUpFormData.errors });
   const [errorCode, setErrorCode] = useState({ type: '', count: 0 });
   const [formStartTime, setFormStartTime] = useState(null);
+  const [successMessage, setSuccessMessage] = useState('');
   // temporary error state for embedded experience because we don't want to show errors on blur
   const [temporaryErrors, setTemporaryErrors] = useState({ ...backedUpFormData.errors });
 
@@ -210,6 +213,7 @@ const RegistrationPage = (props) => {
 
   const registerUser = () => {
     const totalRegistrationTime = (Date.now() - formStartTime) / 1000;
+    // debugger;
     let payload = { ...formFields };
 
     if (currentProvider) {
@@ -249,16 +253,47 @@ const RegistrationPage = (props) => {
     dispatch(registerNewUser(payload));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    registerUser();
+  const userRegistrationRequest = async () => {
+    try {
+      debugger;
+      const payload = {"email": formFields.email};
+      const requestConfig = {
+        headers: { 'Content-Type': 'application/json' },
+    };
+      const url = new URL(`${getConfig().LMS_BASE_URL}/accounts/v1/register`);
+      const { data } = await getAuthenticatedHttpClient().post(url.href, payload, requestConfig);
+
+      // const successMessage = {"message": data.message}
+
+      setSuccessMessage(data.message);
+
+      
+      return data;
+    } catch (error) {
+      const validationErrors = {"email": error.response.data.email || error.response.data.message }
+      setErrors(validationErrors);
+      setErrorCode(prevState => ({ type: FORM_SUBMISSION_ERROR, count: prevState.count + 1 }));
+      return;
+      // throw error;
+    }
   };
 
-  useEffect(() => {
-    if (autoSubmitRegForm && userPipelineDataLoaded) {
-      registerUser();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (formFields.email == '') {
+      const validationErrors = {"email": "Enter your email address"}
+      setErrors(validationErrors);
+      setErrorCode(prevState => ({ type: FORM_SUBMISSION_ERROR, count: prevState.count + 1 }));
+      return;
     }
-  }, [autoSubmitRegForm, userPipelineDataLoaded]); // eslint-disable-line react-hooks/exhaustive-deps
+    userRegistrationRequest();
+  };
+
+  // useEffect(() => {
+  //   if (autoSubmitRegForm && userPipelineDataLoaded) {
+  //     registerUser();
+  //   }
+  // }, [autoSubmitRegForm, userPipelineDataLoaded]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const renderForm = () => {
     if (institutionLogin) {
@@ -274,18 +309,6 @@ const RegistrationPage = (props) => {
         <Helmet>
           <title>{formatMessage(messages['register.page.title'], { siteName: getConfig().SITE_NAME })}</title>
         </Helmet>
-        <RedirectLogistration
-          host={host}
-          authenticatedUser={registrationResult.authenticatedUser}
-          success={registrationResult.success}
-          redirectUrl={registrationResult.redirectUrl}
-          finishAuthUrl={finishAuthUrl}
-          optionalFields={optionalFields}
-          registrationEmbedded={registrationEmbedded}
-          redirectToProgressiveProfilingPage={
-            getConfig().ENABLE_PROGRESSIVE_PROFILING_ON_AUTHN && !!Object.keys(optionalFields.fields).length
-          }
-        />
         {autoSubmitRegForm && !errorCode.type ? (
           <div className="mw-xs mt-5 text-center">
             <Spinner animation="border" variant="primary" id="tpa-spinner" />
@@ -297,27 +320,16 @@ const RegistrationPage = (props) => {
               { 'w-100 m-auto pt-4 main-content': registrationEmbedded },
             )}
           >
-            <ThirdPartyAuthAlert
-              currentProvider={currentProvider}
-              platformName={platformName}
-              referrer={REGISTER_PAGE}
-            />
             <RegistrationFailure
               errorCode={errorCode.type}
               failureCount={errorCode.count}
               context={{ provider: currentProvider, errorMessage: thirdPartyAuthErrorMessage }}
             />
             <Form id="registration-form" name="registration-form">
-              <NameField
-                name="name"
-                value={formFields.name}
-                shouldFetchUsernameSuggestions={!formFields.username.trim()}
-                handleChange={handleOnChange}
-                handleErrorChange={handleErrorChange}
-                errorMessage={errors.name}
-                helpText={[formatMessage(messages['help.text.name'])]}
-                floatingLabel={formatMessage(messages['registration.fullname.label'])}
-              />
+
+              <label htmlFor="email" className='email-label'>
+                {formatMessage(messages['registration.email.label'])}
+              </label>
               <EmailField
                 name="email"
                 value={formFields.email}
@@ -326,45 +338,18 @@ const RegistrationPage = (props) => {
                 handleChange={handleOnChange}
                 errorMessage={errors.email}
                 helpText={[formatMessage(messages['help.text.email'])]}
-                floatingLabel={formatMessage(messages['registration.email.label'])}
               />
-              {!flags.autoGeneratedUsernameEnabled && (
-                <UsernameField
-                  name="username"
-                  spellCheck="false"
-                  value={formFields.username}
-                  handleChange={handleOnChange}
-                  handleErrorChange={handleErrorChange}
-                  errorMessage={errors.username}
-                  helpText={[formatMessage(messages['help.text.username.1']), formatMessage(messages['help.text.username.2'])]}
-                  floatingLabel={formatMessage(messages['registration.username.label'])}
-                />
+              {successMessage && (
+                <div style={{ color: 'green'}}>
+                  {successMessage}
+                </div>
               )}
-              {!currentProvider && (
-                <PasswordField
-                  name="password"
-                  value={formFields.password}
-                  handleChange={handleOnChange}
-                  handleErrorChange={handleErrorChange}
-                  errorMessage={errors.password}
-                  floatingLabel={formatMessage(messages['registration.password.label'])}
-                />
-              )}
-              <ConfigurableRegistrationForm
-                email={formFields.email}
-                fieldErrors={errors}
-                formFields={configurableFormFields}
-                setFieldErrors={registrationEmbedded ? setTemporaryErrors : setErrors}
-                setFormFields={setConfigurableFormFields}
-                autoSubmitRegisterForm={autoSubmitRegForm}
-                fieldDescriptions={fieldDescriptions}
-              />
               <StatefulButton
                 id="register-user"
                 name="register-user"
                 type="submit"
                 variant="brand"
-                className="register-button mt-4 mb-4"
+                className="register-button mt-4 mb-4 w-100"
                 state={submitState}
                 labels={{
                   default: buttonLabel,
@@ -373,15 +358,6 @@ const RegistrationPage = (props) => {
                 onClick={handleSubmit}
                 onMouseDown={(e) => e.preventDefault()}
               />
-              {!registrationEmbedded && (
-                <ThirdPartyAuth
-                  currentProvider={currentProvider}
-                  providers={providers}
-                  secondaryProviders={secondaryProviders}
-                  handleInstitutionLogin={handleInstitutionLogin}
-                  thirdPartyAuthApiStatus={thirdPartyAuthApiStatus}
-                />
-              )}
             </Form>
           </div>
         )}
@@ -416,5 +392,6 @@ RegistrationPage.defaultProps = {
   handleInstitutionLogin: null,
   institutionLogin: false,
 };
+
 
 export default RegistrationPage;

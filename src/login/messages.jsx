@@ -9,7 +9,7 @@ const messages = defineMessages({
   // Login labels
   'login.user.identity.label': {
     id: 'login.user.identity.label',
-    defaultMessage: 'Username or email',
+    defaultMessage: 'email',
     description: 'Label for user identity field to enter either username or email to login',
   },
   'login.password.label': {
@@ -19,7 +19,7 @@ const messages = defineMessages({
   },
   'sign.in.button': {
     id: 'sign.in.button',
-    defaultMessage: 'Sign in',
+    defaultMessage: 'Log in',
     description: 'Sign in button label that appears on login page',
   },
   'forgot.password': {

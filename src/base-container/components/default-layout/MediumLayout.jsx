@@ -4,49 +4,43 @@ import { getConfig } from '@edx/frontend-platform';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { Hyperlink, Image } from '@openedx/paragon';
 import classNames from 'classnames';
-
-import messages from './messages';
+import { useLocation } from 'react-router-dom';
 
 const MediumLayout = () => {
   const { formatMessage } = useIntl();
 
-  return (
-    <>
-      <div className="w-100 medium-screen-top-stripe" />
-      <div className="w-100 p-0 mb-3 d-flex">
-        <div className="col-md-10 bg-primary-400">
-          <Hyperlink destination={getConfig().MARKETING_SITE_BASE_URL}>
-            <Image alt={getConfig().SITE_NAME} className="logo" src={getConfig().LOGO_WHITE_URL} />
-          </Hyperlink>
-          <div className="d-flex align-items-center justify-content-center mb-4 ">
-            <div className={classNames({ 'mt-1 medium-yellow-line': getConfig().SITE_NAME === 'edX' })} />
-            <div>
-              <h1
-                className={classNames(
-                  'display-1 text-white mt-5 mb-5 mr-2 main-heading',
-                  { 'ml-4.5': getConfig().SITE_NAME !== 'edX' },
-                )}
-              >
-                <span>
-                  {formatMessage(messages['start.learning'])}{' '}
-                  <span className="text-accent-a d-inline-block">
-                    {formatMessage(messages['with.site.name'], { siteName: getConfig().SITE_NAME })}
-                  </span>
-                </span>
-              </h1>
+  const location = useLocation();
+  const bannerUrl = `${getConfig().LMS_BASE_URL}/static/nezlamna-theme/images/auth_image.jpg`
+  
+  
+    if (location.pathname == '/register'){
+      return (
+  
+        <div className='w-100 banner-container'>
+        <div className="w-100 p-0 mt-4 mb-3 d-flex flex-column justify-content-center align-items-center">
+            <p className="auth_heading">Sign up</p>
+        </div>
+        </div>      
+      );
+    }
+    else{
+      return (
+  
+        <div className='w-100 banner-container'>
+        <div className="auth_banner_container w-100 d-flex flex-column">
+            <img src={bannerUrl} alt="auth-banner" />
+        </div>
+        <div className="w-100 p-0 mb-3 d-flex flex-column justify-content-center align-items-center">
+            <p className="auth_heading">Authorization</p>
+            <div className='auth_message'>
+    
+            <span className='w-100 d-flex mb-0 justify-content-center align-items-center'>Choose a convenient way to log in.</span>
+            <p>Don't have an account yet? Create one by going to the page <span><a href='/authn/register'>Sign up</a></span> </p>
             </div>
-          </div>
         </div>
-        <div className="col-md-2 bg-white p-0">
-          <svg className="w-100 h-100 medium-screen-svg-primary" preserveAspectRatio="xMaxYMin meet">
-            <g transform="skewX(168)">
-              <rect x="0" y="0" height="100%" width="100%" />
-            </g>
-          </svg>
         </div>
-      </div>
-    </>
-  );
+      );
+    }
 };
 
 export default MediumLayout;

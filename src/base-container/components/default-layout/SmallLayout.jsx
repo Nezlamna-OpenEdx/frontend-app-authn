@@ -18,7 +18,7 @@ const SmallLayout = () => {
   
         <div className='w-100 banner-container'>
         <div className="w-100 p-0 mt-4 mb-3 d-flex flex-column justify-content-center align-items-center">
-            <p className="auth_heading">Register</p>
+            <p className="auth_heading">Sign up</p>
         </div>
         </div>      
       );
@@ -35,7 +35,7 @@ const SmallLayout = () => {
             <div className='auth_message'>
     
             <span className='w-100 d-flex mb-0 justify-content-center align-items-center'>Choose a convenient way to log in.</span>
-            <p>Don't have an account yet? Create one by going to the page <span><a href='/authn/register'>Register</a></span> </p>
+            <p>Don't have an account yet? Create one by going to the page <span><a href='/authn/register'>Sign up</a></span> </p>
             </div>
         </div>
         </div>

@@ -132,7 +132,7 @@ const Logistration = (props) => {
               { key && (
                 <Navigate to={updatePathWithQueryParams(key)} replace />
               )}
-              <div id="main-content" className="main-content" style={{ background: '#fff' }} >
+              <div id="main-content" className="main-content" style={{ background: '#fff !important' }} >
                 {!institutionLogin && !isValidTpaHint() && hideRegistrationLink && (
                   <h3 className="mb-4.5">
                     {formatMessage(messages[selectedPage === LOGIN_PAGE ? 'logistration.sign.in' : 'logistration.register'])}

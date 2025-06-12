@@ -1,3 +1,6 @@
+*, body {
+  font-family: 'Montserrat', sans-serif !important;
+}
 .dropdown-menu-collapse {
   width: 100vw;
   position: absolute;
@@ -76,4 +79,17 @@
 
 #main-content  {
   background: #fff !important;
+}
+
+.site-header-desktop .logo img {
+    height: 40px !important;
+    margin: 10px 0 10px 30px;
+}
+.secondary-menu-container > a {
+      padding: 3px 20px;
+      margin: 0 10px;
+      font-size: 20px;
+}
+.secondary-menu-container {
+  margin-right: 50px;
 }

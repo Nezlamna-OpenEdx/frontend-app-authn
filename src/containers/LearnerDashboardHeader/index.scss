@@ -44,6 +44,7 @@
     background: linear-gradient(180deg, #ff7d5a, #ffa086);
     padding: 10px 40px;
     box-shadow: 0 4px 6px rgb(0, 0, 0, 0.18);
+    height: 80px;
 }
 
 .secondary-menu-container a {
@@ -83,7 +84,7 @@
 
 .site-header-desktop .logo img {
     height: 40px !important;
-    margin: 10px 0 10px 0 !important;
+    margin: 5px 0 5px 40px !important;
 }
 .secondary-menu-container > a {
       padding: 3px 20px;

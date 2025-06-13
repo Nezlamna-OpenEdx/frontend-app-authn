@@ -98,6 +98,7 @@ const RegistrationPage = (props) => {
   const [errorCode, setErrorCode] = useState({ type: '', count: 0 });
   const [formStartTime, setFormStartTime] = useState(null);
   const [successMessage, setSuccessMessage] = useState('');
+  const [showMessage, setShowMessage] = useState(false);
   // temporary error state for embedded experience because we don't want to show errors on blur
   const [temporaryErrors, setTemporaryErrors] = useState({ ...backedUpFormData.errors });
 
@@ -266,6 +267,17 @@ const RegistrationPage = (props) => {
       // const successMessage = {"message": data.message}
 
       setSuccessMessage(data.message);
+      const button = document.getElementById('register-user');
+      setShowMessage(true);
+      button.disabled = true;
+
+      setTimeout(() => {
+        setShowMessage(false);
+        button.disabled = false;
+      }, 5000);
+
+
+
 
       
       return data;
@@ -278,7 +290,7 @@ const RegistrationPage = (props) => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit =  (e) => {
     e.preventDefault();
     if (formFields.email == '') {
       const validationErrors = {"email": "Enter your email address"}
@@ -287,6 +299,9 @@ const RegistrationPage = (props) => {
       return;
     }
     userRegistrationRequest();
+
+
+
   };
 
   // useEffect(() => {
@@ -326,7 +341,6 @@ const RegistrationPage = (props) => {
               context={{ provider: currentProvider, errorMessage: thirdPartyAuthErrorMessage }}
             />
             <Form id="registration-form" name="registration-form">
-
               <label htmlFor="email" className='email-label'>
                 {formatMessage(messages['registration.email.label'])}
               </label>
@@ -339,8 +353,8 @@ const RegistrationPage = (props) => {
                 errorMessage={errors.email}
                 helpText={[formatMessage(messages['help.text.email'])]}
               />
-              {successMessage && (
-                <div style={{ color: 'green'}}>
+              {showMessage && successMessage && (
+                <div className='Success-message' style={{ color: 'green' }}>
                   {successMessage}
                 </div>
               )}
